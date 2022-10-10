@@ -5,7 +5,7 @@ const FormVariants = {
     margin-top: 20px;
     padding: 34px 16px 34px 16px;
     p {
-      margin-top: 8px;
+      margin: 20px 0 24px 0;
     }
     @media (min-width: 768px) {
       && {
@@ -18,7 +18,7 @@ const FormVariants = {
     padding: 34px 16px 20px 16px;
 
     p {
-      margin-top: 18px;
+      margin: 24px 0;
     }
 
     @media (min-width: 768px) {
