@@ -5,7 +5,7 @@ const FormVariants = {
     margin-top: 20px;
     padding: 34px 16px 34px 16px;
     p {
-      margin: 20px 0 24px 0;
+      margin: 30px 0 16px 0;
     }
     h2 {
       margin-bottom: 16px;
