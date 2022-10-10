@@ -7,6 +7,9 @@ const FormVariants = {
     p {
       margin: 20px 0 24px 0;
     }
+    h2 {
+      margin-bottom: 16px;
+    }
     @media (min-width: 768px) {
       && {
         padding: 42px 20px;
