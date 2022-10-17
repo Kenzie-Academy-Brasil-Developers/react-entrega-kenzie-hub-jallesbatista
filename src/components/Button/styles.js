@@ -18,7 +18,22 @@ const ButtonStyledVariants = {
     padding: var(--padding-button-2);
     font-size: var(--font-size-small);
     font-weight: var(--font-weight-semibold);
-
+    &&:hover {
+      background-color: var(--grey-2);
+    }
+    &&:active {
+      scale: 0.9;
+    }
+  `,
+  secondaryPlus: css`
+    background-color: var(--grey-3);
+    font-size: var(--font-size-regular);
+    font-weight: var(--font-weight-semibold);
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     &&:hover {
       background-color: var(--grey-2);
     }

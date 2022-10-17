@@ -3,11 +3,11 @@ import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { IoIosEye, IoMdEyeOff } from 'react-icons/io';
 import * as yup from 'yup';
-import { toast } from 'react-toastify';
+import { useContext } from 'react';
 import { Container } from '../../components/Container';
 import FormStyled from '../../components/Form/styles';
 import ButtonStyled from '../../components/Button/styles';
-import { api } from '../../services/api';
+import { UserContext } from '../../contexts/UserContext';
 
 const schema = yup.object({
   email: yup
@@ -17,48 +17,16 @@ const schema = yup.object({
   password: yup.string().required('A senha é obrigatória'),
 });
 
-const Login = ({
-  passwordView,
-  setPasswordView,
-  viewToggle,
-  setUser,
-  setAuth,
-}) => {
-  // const [loading, setLoading] = useState(false);
-
-  const navigate = useNavigate();
+const Login = () => {
+  const { userLogin, passwordView, setPasswordView } = useContext(UserContext);
   const {
     register,
     handleSubmit,
     formState: { errors },
-    reset,
   } = useForm({
     resolver: yupResolver(schema),
   });
-
-  const userLogin = (data) => {
-    const login = api
-      .post('/sessions', data)
-      .then((resp) => {
-        setAuth(() => true);
-        localStorage.setItem('@kenzieHub:token', resp.data.token);
-        localStorage.setItem('@kenzieHub:userId', resp.data.user.id);
-        setUser(() => resp.data.user);
-        reset();
-        toast.success('Login realizado com sucesso', {
-          autoClose: 1250,
-        });
-        setPasswordView(false);
-        navigate('/dashboard');
-      })
-      .catch((err) => {
-        toast.error(err.response.data.message);
-      });
-
-    toast.promise(login, {
-      pending: 'Por favor, aguarde',
-    });
-  };
+  const navigate = useNavigate();
 
   const registerRedirect = () => {
     setPasswordView(false);
@@ -91,11 +59,17 @@ const Login = ({
             />
 
             {passwordView ? (
-              <button onClick={viewToggle} type='button'>
+              <button
+                onClick={() => setPasswordView(!passwordView)}
+                type='button'
+              >
                 <IoMdEyeOff />
               </button>
             ) : (
-              <button onClick={viewToggle} type='button'>
+              <button
+                onClick={() => setPasswordView(!passwordView)}
+                type='button'
+              >
                 <IoIosEye />
               </button>
             )}

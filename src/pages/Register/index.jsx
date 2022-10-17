@@ -3,11 +3,13 @@ import { useNavigate } from 'react-router-dom';
 import { IoIosEye, IoMdEyeOff } from 'react-icons/io';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { toast } from 'react-toastify';
+// import { toast } from 'react-toastify';
+import { useContext } from 'react';
 import { Container } from '../../components/Container';
 import FormStyled from '../../components/Form/styles';
 import ButtonStyled from '../../components/Button/styles';
-import { api } from '../../services/api';
+import { UserContext } from '../../contexts/UserContext';
+// import { api } from '../../services/api';
 
 const schema = yup.object({
   name: yup.string().required('O nome é obrigatório'),
@@ -34,14 +36,16 @@ const schema = yup.object({
   course_module: yup.string().required('Você deve escolher um módulo'),
 });
 
-const Register = ({ passwordView, setPasswordView, viewToggle }) => {
+const Register = () => {
   const navigate = useNavigate();
+  const { userRegister, passwordView, setPasswordView } =
+    useContext(UserContext);
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-    reset,
+    // reset,
   } = useForm({
     resolver: yupResolver(schema),
   });
@@ -49,27 +53,6 @@ const Register = ({ passwordView, setPasswordView, viewToggle }) => {
   const loginRedirect = () => {
     setPasswordView(false);
     navigate('/login');
-  };
-
-  const userRegister = (data) => {
-    console.log(data);
-    const registro = api
-      .post('/users', data)
-      .then((resp) => {
-        toast.success('Cadastro realizado com sucesso', {});
-        reset();
-        loginRedirect();
-        console.log(resp);
-      })
-      .catch((err) => {
-        console.log(err);
-        toast.clearWaitingQueue();
-        toast.error(err.response.data.message);
-      });
-
-    toast.promise(registro, {
-      pending: 'Por favor, aguarde',
-    });
   };
 
   return (
@@ -104,7 +87,7 @@ const Register = ({ passwordView, setPasswordView, viewToggle }) => {
             placeholder='Digite aqui seu email'
             {...register('email')}
           />
-          <span>{errors.emailCadastro?.message}</span>
+          <span>{errors.email?.message}</span>
         </label>
         <label>
           Senha
@@ -116,11 +99,17 @@ const Register = ({ passwordView, setPasswordView, viewToggle }) => {
               {...register('password')}
             />
             {passwordView ? (
-              <button onClick={viewToggle} type='button'>
+              <button
+                onClick={() => setPasswordView(!passwordView)}
+                type='button'
+              >
                 <IoMdEyeOff />
               </button>
             ) : (
-              <button onClick={viewToggle} type='button'>
+              <button
+                onClick={() => setPasswordView(!passwordView)}
+                type='button'
+              >
                 <IoIosEye />
               </button>
             )}

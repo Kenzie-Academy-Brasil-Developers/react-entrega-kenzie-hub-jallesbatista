@@ -40,7 +40,7 @@ export default createGlobalStyle`
     /* PADDINGS */
     --padding-button-1: 14px 0;
     --padding-button-2: 12px 16px;
-    --padding-button-3: 12px;
+    --padding-button-3: 10px;
     --padding-input: 14px;
 }
 
