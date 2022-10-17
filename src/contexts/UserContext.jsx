@@ -18,8 +18,8 @@ export const UserProvider = ({ children }) => {
     try {
       await api.post('/users', data);
 
-      toast.success('Cadastro realizado com sucesso', {});
-      navigate('/login', { replace: true });
+      toast.success('Conta criada com sucesso');
+      navigate('/login');
       setPasswordView(false);
     } catch (error) {
       const { message } = error.response.data;

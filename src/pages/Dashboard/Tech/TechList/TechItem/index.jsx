@@ -4,7 +4,6 @@ import { TechContext } from '../../../../../contexts/TechContext';
 import TechItemStyled from './styles';
 
 const TechItem = ({ id, title, status }) => {
-  console.log();
   const { techDelete } = useContext(TechContext);
   return (
     <TechItemStyled id={id}>

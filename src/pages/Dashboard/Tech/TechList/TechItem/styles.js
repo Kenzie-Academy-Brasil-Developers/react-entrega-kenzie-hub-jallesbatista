@@ -10,7 +10,10 @@ const TechItemStyled = styled.li`
   justify-content: space-between;
   gap: 24px;
   animation: sideSlideIn 1s ease;
-
+  transition: 0.5s;
+  &&:hover {
+    background-color: var(--grey-2);
+  }
   button {
     background-color: transparent;
     color: #ffffff;
