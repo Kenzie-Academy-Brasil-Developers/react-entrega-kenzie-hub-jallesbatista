@@ -5,7 +5,6 @@ import { ProfileStyled } from './styles';
 
 const Profile = () => {
   const { user } = useContext(UserContext);
-  console.log(user);
   return (
     <ProfileStyled>
       <ContainerStyled variant='dashboard'>
