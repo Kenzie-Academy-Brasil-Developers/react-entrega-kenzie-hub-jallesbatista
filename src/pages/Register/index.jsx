@@ -5,10 +5,10 @@ import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 // import { toast } from 'react-toastify';
 import { useContext } from 'react';
-import { Container } from '../../components/Container';
 import FormStyled from '../../components/Form/styles';
 import ButtonStyled from '../../components/Button/styles';
 import { UserContext } from '../../contexts/UserContext';
+import ContainerStyled from '../../components/Container/styles';
 // import { api } from '../../services/api';
 
 const schema = yup.object({
@@ -56,7 +56,7 @@ const Register = () => {
   };
 
   return (
-    <Container variant='register'>
+    <ContainerStyled variant='register'>
       <div className='title'>
         <h1>Kenzie Hub</h1>
         <ButtonStyled type='button' variant='secondary' onClick={loginRedirect}>
@@ -178,7 +178,7 @@ const Register = () => {
           Cadastrar
         </ButtonStyled>
       </FormStyled>
-    </Container>
+    </ContainerStyled>
   );
 };
 

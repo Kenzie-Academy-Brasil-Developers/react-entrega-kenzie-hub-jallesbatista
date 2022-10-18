@@ -4,10 +4,10 @@ import { useNavigate } from 'react-router-dom';
 import { IoIosEye, IoMdEyeOff } from 'react-icons/io';
 import * as yup from 'yup';
 import { useContext } from 'react';
-import { Container } from '../../components/Container';
 import FormStyled from '../../components/Form/styles';
 import ButtonStyled from '../../components/Button/styles';
 import { UserContext } from '../../contexts/UserContext';
+import ContainerStyled from '../../components/Container/styles';
 
 const schema = yup.object({
   email: yup
@@ -34,7 +34,7 @@ const Login = () => {
   };
 
   return (
-    <Container variant='login'>
+    <ContainerStyled variant='login'>
       <h1>Kenzie Hub</h1>
       <FormStyled variant='login' onSubmit={handleSubmit(userLogin)}>
         <h2>Login</h2>
@@ -90,7 +90,7 @@ const Login = () => {
           Cadastre-se
         </ButtonStyled>
       </FormStyled>
-    </Container>
+    </ContainerStyled>
   );
 };
 
