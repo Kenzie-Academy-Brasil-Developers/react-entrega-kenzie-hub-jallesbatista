@@ -65,7 +65,11 @@ const ButtonStyledVariants = {
   `,
 };
 
-const ButtonStyled = styled.button`
+interface iButtonStyledProps {
+  variant?: 'primary' | 'secondary' | 'secondaryPlus' | 'negative' | 'disable';
+}
+
+const ButtonStyled = styled.button<iButtonStyledProps>`
   ${({ variant }) => ButtonStyledVariants[variant || 'primary']}
   color: white;
 

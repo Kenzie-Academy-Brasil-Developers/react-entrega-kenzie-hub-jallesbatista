@@ -1,19 +1,64 @@
-/* eslint-disable react/jsx-no-constructed-context-values */
-import { createContext, useEffect, useState } from 'react';
+import { createContext, ReactNode, useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { api, token } from '../services/api';
 
-export const UserContext = createContext({});
+// INTERFACES GERAIS
+interface iUserProviderProps {
+  children: ReactNode;
+}
 
-export const UserProvider = ({ children }) => {
-  const [passwordView, setPasswordView] = useState(false);
-  const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
+interface iUserContext {
+  userRegister(data: iRegister): Promise<void>;
+  userLogin(data: iLogin): Promise<void>;
+  passwordView: boolean;
+  setPasswordView: React.Dispatch<React.SetStateAction<boolean>>;
+  user: iUser | null;
+  setUser: React.Dispatch<iUser>;
+  loading: boolean;
+}
+
+export interface iLogin {
+  email: string;
+  password: string;
+}
+
+export interface iRegister {
+  name: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+  bio: string;
+  contact: string;
+  course_module: string;
+}
+
+// INTERFACE DE ESTADOS
+
+interface iUser {
+  avatar_url: null;
+  bio: string;
+  contact: string;
+  course_module: string;
+  created_at: string;
+  email: string;
+  id: string;
+  name: string;
+  techs: [];
+  updated_at: string;
+  works: [];
+}
+
+export const UserContext = createContext<iUserContext>({} as iUserContext);
+
+export const UserProvider = ({ children }: iUserProviderProps) => {
+  const [passwordView, setPasswordView] = useState<boolean>(false);
+  const [user, setUser] = useState<iUser | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
   const navigate = useNavigate();
   const location = useLocation();
 
-  async function userRegister(data) {
+  async function userRegister(data: iRegister): Promise<void> {
     console.log(data);
     try {
       await api.post('/users', data);
@@ -21,13 +66,13 @@ export const UserProvider = ({ children }) => {
       toast.success('Conta criada com sucesso');
       navigate('/login');
       setPasswordView(false);
-    } catch (error) {
-      const { message } = error.response.data;
+    } catch (error: any | unknown) {
+      const message: string = error.response.data.message;
       toast.error(message);
     }
   }
 
-  async function userLogin(data) {
+  async function userLogin(data: iLogin): Promise<void> {
     // Com o then normal da pra colocar um "loading" pelo toast.promise
     // const login = api
     //   .post('/sessions', data)
@@ -54,15 +99,17 @@ export const UserProvider = ({ children }) => {
       const response = await api.post('/sessions', data);
 
       const { user: userResponse, token: tokenResponse } = response.data;
+      const tipedUserResponse: iUser = userResponse;
+
       localStorage.setItem('@kenzieHub:token', tokenResponse);
-      localStorage.setItem('@kenzieHub:userId', userResponse.id);
-      setUser(userResponse);
+      localStorage.setItem('@kenzieHub:userId', tipedUserResponse.id);
+      setUser(tipedUserResponse);
       const toNavigate = location.state?.from?.pathname || '/dashboard';
       navigate(toNavigate, { replace: true });
       toast.success('Login realizado com sucesso');
-    } catch (error) {
+    } catch (error: any | unknown) {
       console.log(error);
-      const { message } = error.response.data;
+      const message: string = error.response.data.message;
       toast.error(message);
     }
   }
@@ -71,7 +118,8 @@ export const UserProvider = ({ children }) => {
     async function loadUser() {
       if (token) {
         try {
-          const { data } = await api.get('/profile');
+          const response = await api.get('/profile');
+          const data: iUser = response.data;
           setUser(data);
         } catch (error) {
           console.log(error);
@@ -85,7 +133,22 @@ export const UserProvider = ({ children }) => {
     loadUser();
   }, []);
 
-  //   const registerMemo = useMemo(() => userRegister, []);
+  useEffect(() => {
+    const viewPassword = () => {
+      const inputPassword = document.querySelector(
+        '#password'
+      ) as HTMLInputElement;
+      if (inputPassword) {
+        if (passwordView) {
+          inputPassword.type = 'text';
+        } else {
+          inputPassword.type = 'password';
+        }
+      }
+    };
+    viewPassword();
+  }, [passwordView]);
+
   return (
     <UserContext.Provider
       value={{

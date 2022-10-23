@@ -1,9 +1,9 @@
 import { useContext } from 'react';
 import { FaRegTrashAlt } from 'react-icons/fa';
-import { TechContext } from '../../../../../contexts/TechContext';
+import { iTech, TechContext } from '../../../../../contexts/TechContext';
 import TechItemStyled from './styles';
 
-const TechItem = ({ id, title, status }) => {
+const TechItem = ({ id, title, status }: iTech) => {
   const { techDelete } = useContext(TechContext);
   return (
     <TechItemStyled id={id}>

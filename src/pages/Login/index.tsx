@@ -6,7 +6,7 @@ import * as yup from 'yup';
 import { useContext } from 'react';
 import FormStyled from '../../components/Form/styles';
 import ButtonStyled from '../../components/Button/styles';
-import { UserContext } from '../../contexts/UserContext';
+import { iLogin, UserContext } from '../../contexts/UserContext';
 import ContainerStyled from '../../components/Container/styles';
 
 const schema = yup.object({
@@ -23,7 +23,7 @@ const Login = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({
+  } = useForm<iLogin>({
     resolver: yupResolver(schema),
   });
   const navigate = useNavigate();

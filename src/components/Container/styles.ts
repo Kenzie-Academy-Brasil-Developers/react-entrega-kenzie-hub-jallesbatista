@@ -27,7 +27,11 @@ const ContainerVariants = {
   `,
 };
 
-const ContainerStyled = styled.div`
+interface iContainerStyledProps {
+  variant: 'login' | 'register' | 'dashboard';
+}
+
+const ContainerStyled = styled.div<iContainerStyledProps>`
   ${({ variant }) => ContainerVariants[variant]}
 
   width: 90%;
