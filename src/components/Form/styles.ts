@@ -32,7 +32,11 @@ const FormVariants = {
   `,
 };
 
-const FormStyled = styled.form`
+interface iFormStyledProps {
+  variant: 'login' | 'register';
+}
+
+const FormStyled = styled.form<iFormStyledProps>`
   ${({ variant }) => FormVariants[variant]}
 
   background-color: var(--grey-3);

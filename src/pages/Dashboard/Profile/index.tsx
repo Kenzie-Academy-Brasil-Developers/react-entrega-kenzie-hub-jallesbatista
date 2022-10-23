@@ -9,8 +9,8 @@ const Profile = () => {
     <ProfileStyled>
       <ContainerStyled variant='dashboard'>
         <div className='profile__info'>
-          <h2>Olá, {user.name}</h2>
-          <p>{user.course_module}</p>
+          <h2>Olá, {user?.name}</h2>
+          <p>{user?.course_module}</p>
         </div>
       </ContainerStyled>
     </ProfileStyled>

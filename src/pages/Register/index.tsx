@@ -7,7 +7,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useContext } from 'react';
 import FormStyled from '../../components/Form/styles';
 import ButtonStyled from '../../components/Button/styles';
-import { UserContext } from '../../contexts/UserContext';
+import { iRegister, UserContext } from '../../contexts/UserContext';
 import ContainerStyled from '../../components/Container/styles';
 // import { api } from '../../services/api';
 
@@ -46,7 +46,7 @@ const Register = () => {
     handleSubmit,
     formState: { errors },
     // reset,
-  } = useForm({
+  } = useForm<iRegister>({
     resolver: yupResolver(schema),
   });
 
